@@ -33,6 +33,19 @@ public class Board extends JPanel implements ActionListener, KeyListener {
     }
 
     private void populateCells() {
+        // blinker();
+        glider();
+    }
+
+    private void glider() {
+        cells[3][1] = true;
+        cells[4][2] = true;
+        cells[4][3] = true;
+        cells[3][3] = true;
+        cells[2][3] = true;
+    }
+
+    private void blinker() {
         cells[2][2] = true;
         cells[2][3] = true;
         cells[2][4] = true;
