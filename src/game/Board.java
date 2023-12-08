@@ -15,7 +15,7 @@ public class Board extends JPanel implements ActionListener, KeyListener {
     // suppress serialization warning
     private static final long serialVersionUID = 490905409104883233L;
     // controls the delay between each tick in ms
-    private static final int DELAY = 1_000;
+    private static final int DELAY = 300;
 
     private Timer timer;
 
@@ -102,6 +102,7 @@ public class Board extends JPanel implements ActionListener, KeyListener {
 
     @Override
     public void actionPerformed(ActionEvent actionEvent) {
+        doStep();
         repaint();
     }
 
