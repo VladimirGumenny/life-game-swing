@@ -1,21 +1,28 @@
 package game;
 
 import javax.swing.*;
+import java.awt.*;
 
 public class App {
 
     private static void initWindow() {
-        var window = new JFrame("Life on swing");
-        window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        var frame = new JFrame("Life on swing");
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
+        frame.setLayout(new BorderLayout());
+
+        Header header = new Header();
+        frame.add(header, BorderLayout.NORTH);
 
         Board board = new Board();
-        window.add(board);
-        window.addKeyListener(board);
+        frame.add(board, BorderLayout.CENTER);
 
-        window.setResizable(false);
-        window.pack();
-        window.setLocationRelativeTo(null);
-        window.setVisible(true);
+        frame.addKeyListener(board);
+
+        frame.setResizable(false);
+        frame.pack();
+        frame.setLocationRelativeTo(null);
+        frame.setVisible(true);
     }
 
     public static void main(String[] args) {
