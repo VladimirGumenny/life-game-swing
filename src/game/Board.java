@@ -2,10 +2,7 @@ package game;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
+import java.io.Serial;
 
 public class Board extends JPanel {
     public static final int TILE_SIZE = 30;
@@ -13,6 +10,7 @@ public class Board extends JPanel {
     public static final int COLUMNS = 20;
 
     // suppress serialization warning
+    @Serial
     private static final long serialVersionUID = 490905409104883233L;
 
     private final boolean[][] cells = new boolean[COLUMNS][ROWS];
