@@ -7,29 +7,21 @@ import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
-public class Board extends JPanel implements ActionListener, KeyListener {
+public class Board extends JPanel {
     public static final int TILE_SIZE = 30;
     public static final int ROWS = 20;
     public static final int COLUMNS = 20;
 
     // suppress serialization warning
     private static final long serialVersionUID = 490905409104883233L;
-    // controls the delay between each tick in ms
-    private static final int DELAY = 300;
 
-    private Timer timer;
-
-    private boolean[][] cells = new boolean[COLUMNS][ROWS];
+    private final boolean[][] cells = new boolean[COLUMNS][ROWS];
 
     public Board() {
         setPreferredSize(new Dimension(TILE_SIZE * COLUMNS, TILE_SIZE * ROWS));
         setBackground((new Color(232, 232, 232)));
 
         populateCells();
-
-        // this timer will call the actionPerformed() method every DELAY ms
-        timer = new Timer(DELAY, this);
-        timer.start();
     }
 
     private void populateCells() {
@@ -59,6 +51,7 @@ public class Board extends JPanel implements ActionListener, KeyListener {
 
         drawCells(g);
 
+        // this smooths out animations on some systems
         Toolkit.getDefaultToolkit().sync();
     }
 
@@ -100,23 +93,7 @@ public class Board extends JPanel implements ActionListener, KeyListener {
         );
     }
 
-    @Override
-    public void actionPerformed(ActionEvent actionEvent) {
-        doStep();
-        repaint();
-    }
-
-    @Override
-    public void keyTyped(KeyEvent keyEvent) {
-
-    }
-
-    @Override
-    public void keyPressed(KeyEvent keyEvent) {
-        doStep();
-    }
-
-    private void doStep() {
+    protected void doStep() {
         boolean[][] newCells = new boolean[COLUMNS][ROWS];
 
         for (int row = 0; row < ROWS; row++) {
@@ -134,6 +111,7 @@ public class Board extends JPanel implements ActionListener, KeyListener {
         for (int row = 0; row < ROWS; row++)
             for (int col = 0; col < COLUMNS; col++)
                 cells[col][row] = newCells[col][row];
+
     }
 
     private int countNeighbours(int row, int col) {
@@ -154,8 +132,4 @@ public class Board extends JPanel implements ActionListener, KeyListener {
         return num;
     }
 
-    @Override
-    public void keyReleased(KeyEvent keyEvent) {
-
-    }
 }
