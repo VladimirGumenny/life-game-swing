@@ -10,7 +10,7 @@ import static game.Board.TILE_SIZE;
 public class Header extends JPanel {
     public static final String STEP_LABEL_MESSAGE = "Step: ";
     private int step = 0;
-    private JLabel stepLabel;
+    private final JLabel stepLabel;
 
     public Header() {
         setPreferredSize(new Dimension(TILE_SIZE * COLUMNS, TILE_SIZE * 2));
