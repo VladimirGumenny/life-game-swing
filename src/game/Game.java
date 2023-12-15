@@ -4,8 +4,10 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 
-public class Game implements ActionListener {
+public class Game extends JFrame implements ActionListener, KeyListener {
     // controls the delay between each tick in ms
     private static final int DELAY = 300;
     private final Header header;
@@ -15,23 +17,26 @@ public class Game implements ActionListener {
     // case we need access to it in another method
     private final Timer timer;
     private int stepNumber = 0;
+    private boolean isGamePaused = false;
 
     public Game() {
-        var frame = new JFrame("Life on swing");
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setTitle("Life on swing");
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-        frame.setLayout(new BorderLayout());
+        setLayout(new BorderLayout());
 
         header = new Header();
-        frame.add(header, BorderLayout.NORTH);
+        add(header, BorderLayout.NORTH);
 
         board = new Board();
-        frame.add(board, BorderLayout.CENTER);
+        add(board, BorderLayout.CENTER);
 
-        frame.setResizable(false);
-        frame.pack();
-        frame.setLocationRelativeTo(null);
-        frame.setVisible(true);
+        setResizable(false);
+        pack();
+        setLocationRelativeTo(null);
+        setVisible(true);
+
+        addKeyListener(this); // Register this frame as the KeyListener
 
         // this timer will call the actionPerformed() method every DELAY ms
         timer = new Timer(DELAY, this);
@@ -40,8 +45,27 @@ public class Game implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
+        if (isGamePaused) {
+            return;
+        }
+
         board.doStep();
         board.repaint();
         header.updateStep(++stepNumber);
+    }
+
+    @Override
+    public void keyTyped(KeyEvent e) {
+    }
+
+    @Override
+    public void keyPressed(KeyEvent e) {
+        if (e.getKeyCode() == KeyEvent.VK_SPACE) {
+            isGamePaused = !isGamePaused;
+        }
+    }
+
+    @Override
+    public void keyReleased(KeyEvent e) {
     }
 }
