@@ -13,9 +13,6 @@ public class Game extends JFrame implements ActionListener, KeyListener {
     private final Header header;
     private final Board board;
 
-    // keep a reference to the timer object that triggers actionPerformed() in
-    // case we need access to it in another method
-    private final Timer timer;
     private int stepNumber = 0;
     private boolean isGamePaused = false;
 
@@ -39,7 +36,9 @@ public class Game extends JFrame implements ActionListener, KeyListener {
         addKeyListener(this); // Register this frame as the KeyListener
 
         // this timer will call the actionPerformed() method every DELAY ms
-        timer = new Timer(DELAY, this);
+        // keep a reference to the timer object that triggers actionPerformed() in
+        // case we need access to it in another method
+        Timer timer = new Timer(DELAY, this);
         timer.start();
     }
 
