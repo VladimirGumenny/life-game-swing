@@ -18,6 +18,7 @@ public class Game extends JFrame implements ActionListener, KeyListener {
 
     public Game() {
         setTitle("Life on swing");
+        setExtendedState(JFrame.MAXIMIZED_BOTH);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         setLayout(new BorderLayout());

@@ -2,24 +2,37 @@ package game;
 
 import javax.swing.*;
 import java.awt.*;
-import java.io.Serial;
+
+import static game.Header.HEADER_HEIGH_IN_TILES;
 
 public class Board extends JPanel {
     public static final int TILE_SIZE = 30;
-    public static final int ROWS = 20;
-    public static final int COLUMNS = 20;
 
-    // suppress serialization warning
-    @Serial
-    private static final long serialVersionUID = 490905409104883233L;
-
-    private final boolean[][] cells = new boolean[COLUMNS][ROWS];
+    private final boolean[][] cells;
+    private final int rowsNum;
+    private final int columnsNum;
 
     public Board() {
-        setPreferredSize(new Dimension(TILE_SIZE * COLUMNS, TILE_SIZE * ROWS));
+        Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+        int height = screenSize.height;
+        int width = screenSize.width;
+
+        columnsNum = width / TILE_SIZE;
+        rowsNum = height / TILE_SIZE - HEADER_HEIGH_IN_TILES;
+
+        setPreferredSize(new Dimension(TILE_SIZE * columnsNum, TILE_SIZE * rowsNum));
         setBackground((new Color(232, 232, 232)));
 
+        cells = new boolean[columnsNum][rowsNum];
         populateCells();
+    }
+
+    public int getRowsNum() {
+        return rowsNum;
+    }
+
+    public int getColumnsNum() {
+        return columnsNum;
     }
 
     private void populateCells() {
@@ -55,8 +68,8 @@ public class Board extends JPanel {
 
     private void drawBackground(Graphics g) {
         g.setColor(new Color(214, 214, 214));
-        for (int row = 0; row < ROWS; row++) {
-            for (int col = 0; col < COLUMNS; col++) {
+        for (int row = 0; row < rowsNum; row++) {
+            for (int col = 0; col < columnsNum; col++) {
                 // only color every other tile
                 if ((row + col) % 2 == 1) {
                     // draw a square tile at the current row/column position
@@ -72,8 +85,8 @@ public class Board extends JPanel {
     }
 
     private void drawCells(Graphics g) {
-        for (int row = 0; row < ROWS; row++) {
-            for (int col = 0; col < COLUMNS; col++) {
+        for (int row = 0; row < rowsNum; row++) {
+            for (int col = 0; col < columnsNum; col++) {
                 if (cells[col][row]) {
                     drawCell(g, col, row);
                 }
@@ -92,10 +105,10 @@ public class Board extends JPanel {
     }
 
     protected void doStep() {
-        boolean[][] newCells = new boolean[COLUMNS][ROWS];
+        boolean[][] newCells = new boolean[columnsNum][rowsNum];
 
-        for (int row = 0; row < ROWS; row++) {
-            for (int col = 0; col < COLUMNS; col++) {
+        for (int row = 0; row < rowsNum; row++) {
+            for (int col = 0; col < columnsNum; col++) {
                 int neighbours = countNeighbours(row, col);
                 if (cells[col][row]) {
                     newCells[col][row] = neighbours == 2
@@ -106,8 +119,8 @@ public class Board extends JPanel {
             }
         }
 
-        for (int row = 0; row < ROWS; row++)
-            for (int col = 0; col < COLUMNS; col++)
+        for (int row = 0; row < rowsNum; row++)
+            for (int col = 0; col < columnsNum; col++)
                 cells[col][row] = newCells[col][row];
 
     }
@@ -116,8 +129,8 @@ public class Board extends JPanel {
         int num = 0;
         int startRow = (row == 0) ? row : row - 1;
         int startCol = (col == 0) ? col : col - 1;
-        int endRow = (row == ROWS - 1) ? row : row + 1;
-        int endCol = (col == COLUMNS - 1) ? col : col + 1;
+        int endRow = (row == rowsNum - 1) ? row : row + 1;
+        int endCol = (col == columnsNum - 1) ? col : col + 1;
 
         for (int r = startRow; r <= endRow; r++) {
             for (int c = startCol; c <= endCol; c++) {
