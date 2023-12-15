@@ -27,14 +27,6 @@ public class Board extends JPanel {
         populateCells();
     }
 
-    public int getRowsNum() {
-        return rowsNum;
-    }
-
-    public int getColumnsNum() {
-        return columnsNum;
-    }
-
     private void populateCells() {
         // blinker();
         glider();
