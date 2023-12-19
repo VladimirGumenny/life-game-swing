@@ -10,15 +10,27 @@ public class Board extends JPanel {
 
     private final boolean[][] cells;
     private final int rowsNum;
-    private final int columnsNum;
+    private int columnsNum;
 
     public Board() {
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
         int height = screenSize.height;
         int width = screenSize.width;
+        int panelHeight = height;
 
-        columnsNum = width / TILE_SIZE;
-        rowsNum = height / TILE_SIZE - HEADER_HEIGH_IN_TILES;
+        if (System.getProperty("os.name").toLowerCase().contains("mac")) {
+            GraphicsConfiguration defaultConfiguration = GraphicsEnvironment
+                    .getLocalGraphicsEnvironment().getDefaultScreenDevice().getDefaultConfiguration();
+
+            Insets screenInsets = Toolkit.getDefaultToolkit()
+                    .getScreenInsets(defaultConfiguration);
+            int dockHeight = screenInsets.bottom;
+            int titleHeight = screenInsets.top;
+
+            columnsNum = width / TILE_SIZE;
+            panelHeight -= dockHeight + titleHeight;
+        }
+        rowsNum = panelHeight / TILE_SIZE - HEADER_HEIGH_IN_TILES;
 
         setPreferredSize(new Dimension(TILE_SIZE * columnsNum, TILE_SIZE * rowsNum));
         setBackground((new Color(232, 232, 232)));
