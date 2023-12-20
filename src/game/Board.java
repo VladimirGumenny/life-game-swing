@@ -9,10 +9,20 @@ public class Board extends JPanel {
     public static final int TILE_SIZE = 30;
 
     private final boolean[][] cells;
-    private final int rowsNum;
+    private int rowsNum;
     private int columnsNum;
 
     public Board() {
+        calcSize();
+
+        setPreferredSize(new Dimension(TILE_SIZE * columnsNum, TILE_SIZE * rowsNum));
+        setBackground((new Color(232, 232, 232)));
+
+        cells = new boolean[columnsNum][rowsNum];
+        populateCells();
+    }
+
+    private void calcSize() {
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
         int height = screenSize.height;
         int width = screenSize.width;
@@ -31,12 +41,6 @@ public class Board extends JPanel {
             panelHeight -= dockHeight + titleHeight;
         }
         rowsNum = panelHeight / TILE_SIZE - HEADER_HEIGH_IN_TILES;
-
-        setPreferredSize(new Dimension(TILE_SIZE * columnsNum, TILE_SIZE * rowsNum));
-        setBackground((new Color(232, 232, 232)));
-
-        cells = new boolean[columnsNum][rowsNum];
-        populateCells();
     }
 
     private void populateCells() {
