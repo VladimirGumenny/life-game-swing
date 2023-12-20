@@ -56,6 +56,7 @@ public class Board extends JPanel {
         cells[2][3] = true;
     }
 
+    @SuppressWarnings("unused")
     private void blinker() {
         cells[2][2] = true;
         cells[2][3] = true;
