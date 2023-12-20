@@ -62,6 +62,7 @@ public class Game extends JFrame implements ActionListener, KeyListener {
     public void keyPressed(KeyEvent e) {
         if (e.getKeyCode() == KeyEvent.VK_SPACE) {
             isGamePaused = !isGamePaused;
+            header.togglePause(isGamePaused);
         }
     }
 
