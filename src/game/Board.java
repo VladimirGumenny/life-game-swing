@@ -28,18 +28,17 @@ public class Board extends JPanel {
         int width = screenSize.width;
         int panelHeight = height;
 
-        if (System.getProperty("os.name").toLowerCase().contains("mac")) {
-            GraphicsConfiguration defaultConfiguration = GraphicsEnvironment
-                    .getLocalGraphicsEnvironment().getDefaultScreenDevice().getDefaultConfiguration();
+        GraphicsConfiguration defaultConfiguration = GraphicsEnvironment
+                .getLocalGraphicsEnvironment().getDefaultScreenDevice().getDefaultConfiguration();
 
-            Insets screenInsets = Toolkit.getDefaultToolkit()
-                    .getScreenInsets(defaultConfiguration);
-            int dockHeight = screenInsets.bottom;
-            int titleHeight = screenInsets.top;
+        Insets screenInsets = Toolkit.getDefaultToolkit()
+                .getScreenInsets(defaultConfiguration);
+        int dockHeight = screenInsets.bottom;
+        int titleHeight = screenInsets.top;
 
-            columnsNum = width / TILE_SIZE;
-            panelHeight -= dockHeight + titleHeight;
-        }
+        columnsNum = width / TILE_SIZE;
+        panelHeight -= dockHeight + titleHeight;
+
         rowsNum = panelHeight / TILE_SIZE - HEADER_HEIGH_IN_TILES;
     }
 
